@@ -1,0 +1,142 @@
+[
+    {
+        "os": "iOS",
+        "children": [
+            {
+                "brand": "Apple",
+                "children": [
+                    {
+                        "device": "iPhone",
+                        "visits": 5102,
+                        "purchases": 43
+                    },
+                    {
+                        "device": "iPad",
+                        "visits": 6471,
+                        "purchases": 51
+                    },
+                    {
+                        "device": "iPod",
+                        "visits": 2198,
+                        "purchases": 15
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "os": "Android",
+        "children": [
+            {
+                "brand": "HTC",
+                "children": [
+                    {
+                        "device": "One",
+                        "visits": 3218,
+                        "purchases": 68
+                    },
+                    {
+                        "device": "Butterfly",
+                        "visits": 2398,
+                        "purchases": 22
+                    }
+                ]
+            },
+            {
+                "brand": "Samsung",
+                "children": [
+                    {
+                        "device": "SII",
+                        "visits": 2094,
+                        "purchases": 27
+                    },
+                    {
+                        "device": "SIII",
+                        "visits": 5753,
+                        "purchases": 79
+                    },
+                    {
+                        "device": "SIV",
+                        "visits": 4421,
+                        "purchases": 50
+                    }
+                ]
+            },
+            {
+                "brand": "Huawei",
+                "visits": 4212,
+                "purchases": 21
+            },
+            {
+                "brand": "Unknown",
+                "visits": 3528,
+                "purchases": 38
+            }
+        ]
+    },
+    {
+        "os": "Symbian",
+        "children": [
+            {
+                "brand": "Nokia",
+                "children": [
+                    {
+                        "device": "Series 3",
+                        "visits": 3873,
+                        "purchases": 41
+                    },
+                    {
+                        "device": "Series 4",
+                        "visits": 4211,
+                        "purchases": 49
+                    }
+                ]
+            },
+            {
+                "brand": "Unknown",
+                "visits": 2704,
+                "purchases": 24
+            }
+        ]
+    },
+    {
+        "os": "Windows",
+        "children": [
+            {
+                "brand": "HTC",
+                "children": [
+                    {
+                        "device": "Unknown",
+                        "visits": 587,
+                        "purchases": 5
+                    }
+                ]
+            },
+            {
+                "brand": "Nokia",
+                "children": [
+                    {
+                        "device": "Lumia 520",
+                        "visits": 1011,
+                        "purchases": 12
+                    },
+                    {
+                        "device": "Lumia 610",
+                        "visits": 940,
+                        "purchases": 8
+                    },
+                    {
+                        "device": "Lumia 900",
+                        "visits": 1248,
+                        "purchases": 13
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "os": "Unknown",
+        "visits": 3517,
+        "purchases": 26
+    }
+]
