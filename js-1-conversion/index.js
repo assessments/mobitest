@@ -1,13 +1,12 @@
-// your code goes here
 
 /* 
 	This solution uses jQuery to load JSON, handle events, and as a selector engine.
-	The functionality is wrapped into a Page class.
+	The functionality is wrapped into a Conversion class.
 */
 
-function Page() {
+function Conversion() {
 
-	//the state property stores the user input selections
+	//the state property stores the user input selections (default 'All')
 	this.state = {
 		os: 'All',
 		brand: 'All'
@@ -21,8 +20,7 @@ function Page() {
 		} else if (selector.name === 'brand') {
 			this.state.brand = selection;
 		}
-		this.setOptions();
-		this.draw();
+		this.refresh();
 	};
 
 	this.options = {
@@ -55,10 +53,31 @@ function Page() {
 		$.get( "data.json", function (data) {
 			if (data != null) {
 				self.data = data;
-				self.setOptions();
-				self.draw();
+				self.refresh();
 			}
 		}, 'json');
+	};
+
+	this.refresh = function () {
+		this.setOptions();
+		this.setValues();
+		this.draw();
+	}
+
+	this.values = {
+		visits : 0,
+		purchases: 0,
+		conversion: 0
+	};
+
+	this.setValues = function () {
+
+	}
+
+	this.drawConversion = function () {
+		$('[data-value=visits]').text(this.values.visits);
+		$('[data-value=purchases]').text(this.values.purchases);
+		$('[data-value=conversion]').text(this.values.conversion.toFixed(2)+'%');
 	};
 
 	this.drawSelector = function (type) {
@@ -73,15 +92,16 @@ function Page() {
 	this.draw = function() {
 		this.drawSelector('os');
 		this.drawSelector('brand');
+		this.drawConversion();
 	};
 
 };
 
 $(document).ready(function() {
-	var page = new Page();
-	page.load();
+	var conversion = new Conversion();
+	conversion.load();
 
 	$('body').on('change', 'select', function(event) {
-		page.setState(this);
+		conversion.setState(this);
 	});
 });
