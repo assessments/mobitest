@@ -25,7 +25,6 @@ function Page() {
 		this.draw();
 	};
 
-	//the options property 
 	this.options = {
 		os: [],
 		brand: []
@@ -38,7 +37,6 @@ function Page() {
 		this.data.forEach(function (os) {
 			this.options.os.push(os.os);
 			if (os.children) {
-
 				os.children.forEach(function (brand) {
 					if (this.state.os === 'All' || this.state.os === os.os) {
 						this.options.brand.push(brand.brand);	
@@ -63,20 +61,18 @@ function Page() {
 		}, 'json');
 	};
 
-	this.draw = function() {
+	this.drawSelector = function (type) {
 		var options = [], i = -1;
-		this.options.os.forEach(function (os) {
-			options[++i] = '<option>'+os+'</option>';
+		this.options[type].forEach(function (option) {
+			options[++i] = '<option>'+option+'</option>';
 		}, this);
-		$('[name=os]').html(options.join(''));		
-		$('[name=os]').val(this.state.os);
+		$('[name='+type+']').html(options.join(''));		
+		$('[name='+type+']').val(this.state[type]);
+	};
 
-		var options = [], i = -1;
-		this.options.brand.forEach(function (brand) {
-			options[++i] = '<option>'+brand+'</option>';
-		}, this);
-		$('[name=brand]').html(options.join(''));
-		$('[name=brand]').val(this.state.brand);
+	this.draw = function() {
+		this.drawSelector('os');
+		this.drawSelector('brand');
 	};
 
 };
