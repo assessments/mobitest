@@ -4,6 +4,17 @@
 	The functionality is wrapped into a Conversion class.
 */
 
+
+Array.prototype.unique = function() {
+    var unique = [];
+    for (var i = 0; i < this.length; i++) {
+        if (unique.indexOf(this[i]) == -1) {
+            unique.push(this[i]);
+        }
+    }
+    return unique;
+};
+
 function Conversion() {
 
 	//the state property stores the user input selections (default 'All')
@@ -42,6 +53,7 @@ function Conversion() {
 				}, this);
 			}
 		}, this);
+		this.options.brand = this.options.brand.unique(); //remove duplicates from brand array
 	};
 
 	//the data property stores data from the backend
@@ -70,9 +82,66 @@ function Conversion() {
 		conversion: 0
 	};
 
-	this.setValues = function () {
+	this.cumulative = {
+		visits: 0,
+		purchases: 0
+	};
 
+	/*
+		- os
+			- visits
+			- purchases
+			- children (brand)
+				- visits
+				- purchases
+				- children (device)
+					- visits
+					- purchases
+	*/
+
+	this.accumulate = function (item) {
+		if (item.children) {
+			item.children.forEach(function (children) {
+				this.accumulate(children);
+			}, this);
+		} else {
+			this.cumulative.visits += item.visits;
+			this.cumulative.purchases += item.purchases;
+		}
 	}
+
+	this.accumulateBrand = function (os) {
+		if (this.state.brand === 'All') {
+			this.accumulate(os);
+		} else if (os.children) {
+			os.children.forEach(function (brand) {
+				if (this.state.brand === brand.brand) {
+					this.accumulate(brand);
+				}
+			}, this);
+		}
+	}
+
+	this.accumulateOs = function () {
+		this.data.forEach(function (os) {
+			if (this.state.os === 'All') {
+				this.accumulateBrand(os);
+			} else if (this.state.os === os.os) {
+				this.accumulateBrand(os);
+			}
+		}, this);
+	}
+
+	this.setValues = function () {
+		this.cumulative.visits = 0; //reset
+		this.cumulative.purchases = 0; //reset
+
+		this.accumulateOs();
+
+		this.values.visits = this.cumulative.visits;
+		this.values.purchases = this.cumulative.purchases;
+		this.values.conversion = (this.cumulative.purchases / this.cumulative.visits) * 100;
+	};
 
 	this.drawConversion = function () {
 		$('[data-value=visits]').text(this.values.visits);
