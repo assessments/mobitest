@@ -4,7 +4,6 @@
 	The functionality is wrapped into a Conversion class.
 */
 
-
 Array.prototype.unique = function() {
     var unique = [];
     for (var i = 0; i < this.length; i++) {
@@ -23,11 +22,31 @@ function Conversion() {
 		brand: 'All'
 	};
 
+	this.brandExistsInOs = function (osName, brandName) {
+		var found = false;
+		this.data.forEach(function (os) {
+			if (os.os === osName) {
+				if (os.children) {
+					os.children.forEach(function (brand) {
+						if (brand.brand === brandName) {
+							found = true;	
+						}
+					}, this);
+				}
+			}
+		}, this);
+		return found;
+	}
+
 	//the setState method is triggered by a change event and updates the state property
 	this.setState = function (selector) {
 		var selection = $(selector).find(':selected').text();
 		if (selector.name === 'os') {
 			this.state.os = selection;
+			//if the currently selected brand does not belong to new OS selection, then change brand to 'All'
+			if (!this.brandExistsInOs(selection, this.state.brand)) {
+				this.state.brand = 'All';
+			}
 		} else if (selector.name === 'brand') {
 			this.state.brand = selection;
 		}
