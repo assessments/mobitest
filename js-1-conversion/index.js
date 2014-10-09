@@ -67,12 +67,14 @@ function Conversion() {
 	//the load method uses AJAX to fetch the data from the backend
 	this.load = function() {
 		var self = this;
-		$.get( "data.json", function (data) {
-			if (data != null) {
+		$.getJSON( "data.json" )
+			.done(function( data ) {
 				self.data = data;
 				self.refresh();
-			}
-		}, 'json');
+		  	})
+		  	.fail(function( jqxhr, textStatus, error ) {
+		  		console.log( 'Error loading data ('+textStatus + "). " + error);
+			});
 	};
 
 	//the refresh method peforms all steps needed to update the page
