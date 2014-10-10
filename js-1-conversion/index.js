@@ -3,7 +3,7 @@
  * This solution uses jQuery to load JSON (AJAX), handle events, and as a selector engine.
  *
  * Concepts illustrated:
- *  - Object-oriented JavaScript
+ *  - object-oriented JavaScript
  *  - separation of concerns (model, controller, view separation even though no MVC framework was used)
  *  - DRY (don't repeat yourself)
  *  - recursive functions
