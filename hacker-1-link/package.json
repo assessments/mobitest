@@ -1,0 +1,25 @@
+{
+  "name": "mobitest",
+  "version": "1.0.0",
+  "description": "Web page scraper",
+  "main": "scraper.js",
+  "dependencies": {
+    "request": "^2.44.1",
+    "cheerio": "^0.17.0"
+  },
+  "devDependencies": {
+    },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mtmacdonald/mobitest"
+  },
+  "author": "Mark Macdonald",
+  "license": "Public Domain",
+  "bugs": {
+    "url": "https://github.com/mtmacdonald/mobitest/issues"
+  },
+  "homepage": "https://github.com/mtmacdonald/mobitest"
+}
