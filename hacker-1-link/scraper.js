@@ -71,8 +71,9 @@ function Scraper() {
 			request(url, function (error, response, body) {
 				if (!error && response.statusCode == 200) {
 					link.broken = false;
+				} else if (url === false) {
+					link.broken = false;
 				} else {
-					console.log(link.url);
 					link.broken = true;
 				}
 				if (self.completed()) {
@@ -100,7 +101,7 @@ function Scraper() {
 		} else if (parts.protocol === null) {
 			return this.url+url; //for relative urls, prepend the root
 		} else if (parts.protocol === 'javascript:') {
-			return url; //spec for handling JavaScript URLs is not defined for task
+			return false; //JavaScript links will not be marked as broken (spec unclear)
 		}
 	};
 
