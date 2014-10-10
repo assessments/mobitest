@@ -4,8 +4,8 @@
  *
  * Concepts illustrated:
  *  - Object-oriented JavaScript
- *	- separation of concerns (model, controller, view separation even though no MVC framework was used)
- *	- DRY (don't repeat yourself)
+ *  - separation of concerns (model, controller, view separation even though no MVC framework was used)
+ *  - DRY (don't repeat yourself)
  *  - recursive functions
  *  - extending (native) objects with prototype
  *  - functional programming
@@ -118,7 +118,7 @@ function Conversion() {
 	};
 
 	/**
-	 * Accumate - a recursive method to sum the visits and purchases
+	 * Accumulate - a recursive method to sum the visits and purchases
 	 *
 	 * The nested tree with a uniform structure made recursion a good solution:
 	 *
@@ -168,7 +168,7 @@ function Conversion() {
 		}, this);
 	}
 
-	//the setOptions method updates the values object with the correct values to display, dending on chosen options
+	//the setValues method updates the values object with the correct values to display, dending on chosen options
 	this.setValues = function () {
 		//reset the accumulator:
 		this.accumulator.visits = 0;
