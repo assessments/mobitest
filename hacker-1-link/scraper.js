@@ -3,7 +3,7 @@
  * This solution uses Node.js with the 'request' package for HTTP requests and the 'cheerio' package as a selector engine.
  *
  * Solution does not handle dynamically generatored DOM (links inserted after page loads). It could be improved by
- * using a JavaScript engine, e.g. PhantomJS.
+ * using a JavaScript engine, e.g. PhantomJS to handle this.
  *
  * Concepts illustrated:
  *  - object-oriented JavaScript
@@ -16,7 +16,7 @@
 
 var request = require('request');
 var cheerio = require('cheerio');
-var url = require('url')
+var parser = require('url')
 
 /**
  * Scraper class
@@ -57,8 +57,8 @@ function Scraper() {
 		var links = $('a');
 		links.each( function( index, element ){
 			var label =  $(this).text().trim();
-			var link = $(this).attr('href');
-			self.links.push({label: label, link: link});
+			var url = $(this).attr('href');
+			self.links.push({label: label, url: url});
 		});
 	};
 
@@ -67,11 +67,13 @@ function Scraper() {
 		this.counter = 0; //reset
 		this.links.forEach(function (link) {
 			var self = this;
-			request(link, function (error, response, body) {
+			var url = this.parseUrl(link.url);
+			request(url, function (error, response, body) {
 				if (!error && response.statusCode == 200) {
-					link['broken'] = false;
+					link.broken = false;
 				} else {
-					link['broken'] = true;
+					console.log(link.url);
+					link.broken = true;
 				}
 				if (self.completed()) {
 					self.report();
@@ -88,26 +90,30 @@ function Scraper() {
 			result = true;
 		}
 		return result;
-	}
+	};
 
 	//the parseUrl method assesses the type of each link
 	this.parseUrl = function (url) {
-		var parts = url.parse(url, true);
+		var parts = parser.parse(url, true);
 		if (parts.protocol === 'http:' || parts.protocol === 'https:') {
-			return url;
+			return url;	//for absolute urls, return the url
 		} else if (parts.protocol === null) {
-			return this.url+url;
+			return this.url+url; //for relative urls, prepend the root
 		} else if (parts.protocol === 'javascript:') {
-			return url;
+			return url; //spec for handling JavaScript URLs is not defined for task
 		}
 	};
 
 	//the report method outputs the results to the console
 	this.report = function () {
+		var total = this.links.length;
+		var broken = this.links.filter( function (x) {return x.broken === true;} ).length;
+		console.log('Total Links: '+total);
+		console.log('Broken Links: '+broken);
 		this.links.forEach( function(link) {
-			console.log(link.link+', '+link.broken);
+			console.log(link.url+', '+link.broken);
 		}, this);
-	}
+	};
 };
 
 var scraper = new Scraper();
