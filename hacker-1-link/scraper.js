@@ -18,7 +18,7 @@ function Scraper() {
 
 	this.process = function () {
 		this.parse()
-		scraper.analyze(0);
+		scraper.analyze();
 
 	}
 
@@ -33,21 +33,32 @@ function Scraper() {
 		});
 	};
 
-	this.analyze = function (i) {
-		if( i < this.links.length ) {
-			var link = this.links[i].link;
+	this.counter = 0;
+
+	this.completed = function () {
+		var result = false;
+		if (this.counter >= this.links.length-1) {
+			result = true;
+		}
+		return result;
+	}
+
+	this.analyze = function () {
+		this.counter = 0; //reset
+		this.links.forEach( function(link) {
 			var self = this;
 			request(link, function (error, response, body) {
 				if (!error && response.statusCode == 200) {
-					self.links[i]['broken'] = false;
+					link['broken'] = false;
 				} else {
-					self.links[i]['broken'] = true;
+					link['broken'] = true;
 				}
-				self.analyze(i+1);
+				if (self.completed()) {
+					self.report();
+				}
+				self.counter += 1;
 			});
-		} else {
-			this.report();
-		}
+		}, this);
 	};
 
 	this.parseUrl = function (url) {
