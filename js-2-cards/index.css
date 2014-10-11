@@ -1,0 +1,34 @@
+
+body {
+	overflow-x: hidden;
+}
+
+#container {
+	height: 80vh;
+}
+
+#card, #buffer {
+	width: 100%;
+	position: absolute;
+	background-color: white;
+}
+
+#buffer {
+	z-index: -10;
+}
+
+#navigation {
+	background-color: black;
+	text-align: center;
+	height: 50px;
+}
+
+h1 {
+	background-color: steelblue;
+	height: 50px;
+	line-height: 50px;
+	/*padding: 0 10px 0 10px;*/
+}
+
+.js-link {color: white; line-height: 50px; text-decoration: underline; cursor: pointer;}
+.js-link:hover {text-decoration: none;}

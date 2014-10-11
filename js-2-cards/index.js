@@ -22,28 +22,42 @@ function Cards() {
 			var html = $(this).html();
 			self.cards.push({title: title, html: html});
 		})
-		this.draw(0);
+		this.draw(0, "#card");
 	};
+
+	this.animate = function (left) {
+		$('#container').append('<div id="buffer"></div>').css('z-index', '-1');
+		this.draw(this.state, '#buffer');
+		$("#card").animate({
+			left: left
+		}, 600, function () {
+			$("#card").remove();
+			$("#buffer").attr("id","card").css('z-index', 'auto');
+			$("#container").css('z-index', 'auto');
+		});
+	}
 
 	this.next = function () {
 		if (this.state < this.cards.length-1) {
 			this.state += 1;
-			this.draw(this.state);
+			var width = $(window).width();
+			this.animate(-width);
 		}
 	};
 
 	this.previous = function () {
 		if (this.state > 0) {
 			this.state -= 1;
-			this.draw(this.state);
+			var width = $(window).width();
+			this.animate(width);
 		}
 	};
 
-	this.draw = function (card) {
+	this.draw = function (card, container) {
 		var html = [], i = -1;
 		html[++i] = '<h1>'+this.cards[card].title+'</h1>';
 		html[++i] = '<div>'+this.cards[card].html+'</div>';
-		$('#content').html(html.join(''));
+		$(container).html(html.join(''));
 	};
 };
 
