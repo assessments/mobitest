@@ -3,6 +3,8 @@ function Cards() {
 
 	this.cards = [];
 
+	this.state = 0;
+
 	this.load = function () {
 		$.ajax({
 		    type: "GET",
@@ -20,13 +22,27 @@ function Cards() {
 			var html = $(this).html();
 			self.cards.push({title: title, html: html});
 		})
-		this.draw();
+		this.draw(0);
 	};
 
-	this.draw = function () {
+	this.next = function () {
+		if (this.state < this.cards.length-1) {
+			this.state += 1;
+			this.draw(this.state);
+		}
+	};
+
+	this.previous = function () {
+		if (this.state > 0) {
+			this.state -= 1;
+			this.draw(this.state);
+		}
+	};
+
+	this.draw = function (card) {
 		var html = [], i = -1;
-		html[++i] = '<h1>'+this.cards[0].title+'</h1>';
-		html[++i] = '<div>'+this.cards[0].html+'</div>';
+		html[++i] = '<h1>'+this.cards[card].title+'</h1>';
+		html[++i] = '<div>'+this.cards[card].html+'</div>';
 		$('#content').html(html.join(''));
 	};
 };
@@ -34,4 +50,12 @@ function Cards() {
 $(document).ready(function() {
 	var cards = new Cards();
 	cards.load();
+
+	$('#navigation').on('click', '#previous', function(event) {
+		cards.previous();
+	});
+
+	$('#navigation').on('click', '#next', function(event) {
+		cards.next();
+	});
 });
