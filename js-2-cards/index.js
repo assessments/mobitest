@@ -41,7 +41,10 @@ function Cards() {
 		var self = this;
 		$(xml).find('card').each(function () {
 			var title = $(this).attr('title');
-			var html = $(this).html();
+			//From jQuery docs, .html() is not available on XML documents (and doesn't work in IE)
+			//But we can clone the childen of the card into a temporary orphan element, and use that to get the HTML
+			//see http://stackoverflow.com/questions/652763
+			var html = $('<div></div>').append($(this).clone().children()).html();
 			self.cards.push({title: title, html: html});
 		})
 		this.draw(0, "#card");
