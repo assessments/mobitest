@@ -30,7 +30,7 @@ function Cards() {
 		this.draw(this.state, '#buffer');
 		$("#card").animate({
 			left: left
-		}, 600, function () {
+		}, 800, function () {
 			$("#card").remove();
 			$("#buffer").attr("id","card").css('z-index', 'auto');
 			$("#container").css('z-index', 'auto');

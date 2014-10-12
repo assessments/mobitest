@@ -4,13 +4,22 @@ body {
 }
 
 #container {
-	height: 80vh;
+	height: calc(100vh - 50px);
+	margin-bottom: 0;
+	padding: 0;
 }
 
 #card, #buffer {
-	width: 100%;
+	width: calc(100vw - 50px);
+	height: calc(100vh - 50px);
+	padding: 0 25px 0 25px;
 	position: absolute;
 	background-color: white;
+	overflow-y: auto;
+}
+
+#card p, #buffer p {
+	padding: 0 5px 0 5px;
 }
 
 #buffer {
@@ -27,7 +36,7 @@ h1 {
 	background-color: steelblue;
 	height: 50px;
 	line-height: 50px;
-	/*padding: 0 10px 0 10px;*/
+	padding: 0 5px 0 5px;
 }
 
 .js-link {color: white; line-height: 50px; text-decoration: underline; cursor: pointer;}
