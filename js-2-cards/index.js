@@ -22,6 +22,9 @@ function Cards() {
 	//the state property stores which card is currently being displayed
 	this.state = 0;
 
+	//the disabled property stops the 'previous' and 'next' buttons being used while an animation is being completed
+	this.disabled = false;
+
 	//the load method uses AJAX to fetch the XML from the backend
 	this.load = function () {
 		$.ajax({
@@ -46,6 +49,7 @@ function Cards() {
 
 	//the animate method performs the card change with an animation
 	this.animate = function (left) {
+		var self = this;
 		$('#container').append('<div id="buffer"></div>').css('z-index', '-1'); //temporary buffer, background layer
 		this.draw(this.state, '#buffer'); //draw the new card onto the background buffer
 		$("#card").animate({ //animate the old card off the screen
@@ -54,12 +58,14 @@ function Cards() {
 			$("#card").remove(); //remove the old card
 			$("#buffer").attr("id","card").css('z-index', 'auto'); //make the temporary buffer become the new card, and bring it to front layer
 			$("#container").css('z-index', 'auto');
+			self.disabled = false;
 		});
 	}
 
 	//the next method draws the next page
 	this.next = function () {
-		if (this.state < this.cards.length-1) {
+		if (!this.disabled && this.state < this.cards.length-1) {
+			this.disabled = true;
 			this.state += 1;
 			var width = $(window).width();
 			this.animate(-width);
@@ -68,7 +74,8 @@ function Cards() {
 
 	//the previous method draws the previous page
 	this.previous = function () {
-		if (this.state > 0) {
+		if (!this.disabled && this.state > 0) {
+			this.disabled = true;
 			this.state -= 1;
 			var width = $(window).width();
 			this.animate(width);
