@@ -1,6 +1,12 @@
 
+/**
+ * This solution uses viewport units (vh, vw) and calc() to implement the sticky footer.
+ * 
+ * So all modern browsers (IE9+) are support according http://caniuse.com.
+ */
+
 body {
-	overflow-x: hidden;
+	overflow-x: hidden; /*don't show scroll bars when animated cards move off the page*/
 }
 
 #container {
