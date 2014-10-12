@@ -53,7 +53,7 @@ function Cards() {
 	//the animate method performs the card change with an animation
 	this.animate = function (left) {
 		var self = this;
-		$('#container').append('<div id="buffer"></div>').css('z-index', '-1'); //temporary buffer, background layer
+		$('#container').append('<div id="buffer"></div>'); //temporary buffer, background layer
 		this.draw(this.state, '#buffer'); //draw the new card onto the background buffer
 		$("#card").animate({ //animate the old card off the screen
 			left: left
